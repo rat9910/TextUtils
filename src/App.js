@@ -1,15 +1,14 @@
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route } from "react-router-dom";
 import "./App.css";
 import Navbar from "./components/Navbar";
 import Inputtext from "./components/Inputtext";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Alert from "./components/Alert";
 import About from "./components/About";
-import Contact from './components/Contact';
-
+import Contact from "./components/Contact";
 
 function App() {
-  const [mode, setMode] = useState("light");
+  const [mode, setMode] = useState("dark");
   const [alert, setAlert] = useState(null);
 
   const showAlert = (message, type) => {
@@ -33,10 +32,12 @@ function App() {
       showAlert("Dark mode has been Disable", "success");
     }
   };
+  useEffect(() => {
+    document.body.style.backgroundColor = "#042743";
+  }, []);
 
   return (
     <>
-    
       <Navbar
         title="TextUtils"
         mode={mode}
@@ -44,7 +45,7 @@ function App() {
         aboutUs="About"
       />
       <Alert alert={alert} />
-        {/* <Routes>
+      {/* <Routes>
           <Route path="/About" element={<About/>}/>
           <Route path="/Alert" element={<Alert/>}/>
           <Route path="/" element={
@@ -55,19 +56,23 @@ function App() {
               showAlert={showAlert}
             /></div>}/>
         </Routes> */}
-        <div className="container my-4">
+      <div className="container my-4">
         <Routes>
-
-        <Route exact path="/" element={<Inputtext
-              heading="Try TextUtils - Word Counter, Character Counter, Remove Extra Spaces"
-              mode={mode}
-              showAlert={showAlert}
-            />} />
+          <Route
+            exact
+            path="/"
+            element={
+              <Inputtext
+                heading="Try TextUtils - Word Counter, Character Counter, Remove Extra Spaces"
+                mode={mode}
+                showAlert={showAlert}
+              />
+            }
+          />
           <Route exact path="/about" element={<About mode={mode} />} />
-          <Route exact path="/contact" element={<Contact mode={mode}/>}/>
-          </Routes>
-          </div>
-            
+          <Route exact path="/contact" element={<Contact mode={mode} />} />
+        </Routes>
+      </div>
     </>
   );
 }
